@@ -3,8 +3,14 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  plugins: ['solid'],
-  extends: ['airbnb-base', 'plugin:solid/recommended'],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  plugins: ['react-refresh'],
+  extends: [
+    'airbnb-base',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:react-hooks/recommended',
+  ],
   overrides: [
     {
       env: {
@@ -18,10 +24,13 @@ module.exports = {
       },
     },
   ],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
+  settings: { react: { version: '18.2' } },
+  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   rules: {
+    'react/jsx-no-target-blank': 'off',
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
   },
 };
