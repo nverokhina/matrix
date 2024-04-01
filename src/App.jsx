@@ -1,15 +1,31 @@
+import { useState } from 'react';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { format, isValid } from 'date-fns';
+import { ru } from 'date-fns/locale';
 import { calculate } from './utilities';
 import styles from './App.module.css';
 import matrixConfig from './utilities/matrix-config';
+import 'react-datepicker/dist/react-datepicker.css';
+
+registerLocale('ru ', ru);
 
 function App() {
+  const [startDate, setStartDate] = useState();
+  const [error, setError] = useState();
+  const [result, setResult] = useState({});
+
   const calc = () => {
-    const res = calculate('25.12.1987');
-    console.log('res:', res, matrixConfig);
+    if (!startDate || error) return;
+    const res = calculate(format(startDate || new Date(), 'dd.MM.yyyy'));
+    setResult(res);
   };
 
   return (
     <main className={styles.main}>
+      <div className={styles.author}>
+        <p>Надежда Ерохина</p>
+        <p className={styles.title}>нумеролог</p>
+      </div>
       <div className={styles.infoSection}>
         <div className={styles.infoCard}>
           <h2>
@@ -17,38 +33,63 @@ function App() {
           </h2>
           <div className={styles.dateInput}>
             <label htmlFor="date">Дата рождения</label>
-            <input type="text" id='date'/>
+            <DatePicker
+              selected={startDate}
+              maxDate={new Date()}
+              minDate={new Date('01.01.1900')}
+              onChange={(date) => {
+                if (isValid(date)) {
+                  setStartDate(date);
+                  setError(false);
+                } else {
+                  setError(true);
+                }
+              }}
+              locale={ru}
+              dateFormat="dd.MM.yyyy"
+              placeholderText='ДД.ММ.ГГГГ'
+              className={error ? 'error' : ''}
+            />
           </div>
           <div>
-          <button onClick={calc} className="">Рассчитать</button>
+          <button onClick={calc} disabled={!startDate}>Рассчитать</button>
           </div>
         </div>
       </div>
       <div className={styles.matrixWrapper}>
-        <div className={styles.info}>
-          <p>
-            Дата рождения: <span>17.01.1985</span>
-          </p>
-          <p>
-            Доп. числа: <span>44 22 11</span>
-          </p>
-        </div>
-        <div className={styles.matrixGrid}>
-          <div className={styles.fateNumber}>
-            Число судьбы: <span>5</span>
-          </div>
-          <div className={styles.grid}>
-            <div className={styles.card}>
-              <div className={styles.cardHeader}>
-                <div className={styles.cardIcon}>icon</div>
-                <div>Темперамент</div>
+        {Object.keys(result).length > 0 ? (
+          <>
+            <div className={styles.info}>
+              <p>
+                Дата рождения: <span>{result.valueDate}</span>
+              </p>
+              <p>
+                Доп. числа: <span>{result.numberAdditionalNumber}</span>
+              </p>
+            </div>
+            <div className={styles.matrixGrid}>
+              <div className={styles.fateNumber}>
+                Число судьбы: <span>{result.numberFate}</span>
               </div>
-              <div className={styles.cardBody}>
-                5
+              <div className={styles.grid}>
+                {Object.keys(result).length > 0 && matrixConfig.map((card) => (
+                  <div className={styles.card} key={card.path}>
+                    <div className={styles.cardHeader}>
+                      <div>{card.label}</div>
+                    </div>
+                    <div className={styles.cardBody}>
+                      {result[card.path]}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
+          </>
+        ) : (
+          <div className={styles.noResults}>
+            Рассчитайте Ваше число судьбы!
           </div>
-        </div>
+        )}
       </div>
     </main>
   );
