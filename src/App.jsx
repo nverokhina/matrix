@@ -1,4 +1,5 @@
 import { calculate } from './utilities';
+import styles from './App.module.css';
 
 function App() {
   const calc = () => {
@@ -7,17 +8,20 @@ function App() {
   };
 
   return (
-    <main>
-      <div class="input">
-        <h1>
-          Enter date
-        </h1>
-        <div>
-          Datepicker
+    <main class={styles.main}>
+      <div class={styles.infoSection}>
+        <div class={styles.infoCard}>
+          <h2>
+           Введите дату рождения
+          </h2>
+          <div class={styles.dateInput}>
+            <label for="date">Дата рождения</label>
+            <input type="text" id='date'/>
+          </div>
+          <div>
+          <button onClick={calc} class="">Рассчитать</button>
+          </div>
         </div>
-        <div>
-        <button onClick={calc} class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
-      </div>
       </div>
       <div class="matrix">
         <div class="info">
