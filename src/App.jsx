@@ -72,14 +72,18 @@ function App() {
                 Число судьбы: <span>{result.numberFate}</span>
               </div>
               <div className={styles.grid}>
-                {Object.keys(result).length > 0 && matrixConfig.map((card) => (
-                  <div className={styles.card} key={card.path}>
-                    <div className={styles.cardHeader}>
-                      <div>{card.label}</div>
-                    </div>
-                    <div className={styles.cardBody}>
-                      {result[card.path]}
-                    </div>
+                {Object.keys(result).length > 0 && matrixConfig.map((column, idx) => (
+                  <div className={styles.gridColumn} key={idx}>
+                    {column.map((card, index) => (!card ? <div key={index}/> : (
+                      <div className={card.isLong ? styles.cardLong : styles.card} key={card.path}>
+                        <div className={styles.cardHeader}>
+                          <div>{card.label}</div>
+                        </div>
+                        <div className={styles.cardBody}>
+                          {result[card.path]}
+                        </div>
+                      </div>
+                    )))}
                   </div>
                 ))}
               </div>

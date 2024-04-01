@@ -1,5 +1,5 @@
 .main {
-  background-color: #EEE;
+  background-image: repeating-linear-gradient(0deg, rgba(40, 121, 80, 0.11) 0px, rgba(40, 121, 80, 0.11) 1px, transparent 1px, transparent 21px), repeating-linear-gradient(90deg, rgba(40, 121, 80, 0.11) 0px, rgba(40, 121, 80, 0.11) 1px, transparent 1px, transparent 21px), linear-gradient(90deg, rgb(238, 238, 238), rgb(238, 238, 238));
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
 }
 
 .infoSection {
-  background-color: #E8D5C4;
+  background-color: #73A9AD;
   height: 110px;
   display: flex;
   flex-direction: column;
@@ -36,7 +36,7 @@
 }
 
 .infoCard {
-  background-color: #FFF1DC;
+  background-color: #F5F0BB;
   transform: translateY(130px);
   width: 90%;
   box-shadow: 0 8px 26px -4px hsla(0, 0%, 8%, .15), 0 8px 9px -5px hsla(0, 0%, 8%, .06);
@@ -50,11 +50,11 @@
 }
 
 .infoCard button {
-  background-color: #3A98B9;
-  color: #fff;
+  background-color: #287950;
+  color: #fefefe;
   padding: 12px 32px;
   box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-  border: 1px solid #3A98B9;
+  border: 1px solid #287950;
   border-radius: 0.375rem;
   cursor: pointer;
   font-size: 20px;
@@ -62,7 +62,7 @@
 }
 
 .infoCard button:active {
-  background-color: #307E9A;
+  background-color: #236846;
 }
 
 .dateInput {
@@ -123,22 +123,38 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 90px);
+  grid-template-columns: 80px 80px 80px 80px;
   justify-content: center;
   padding: 1rem 0;
   gap: 10px;
 }
 
-.card {
+.gridColumn {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.gridColumn>div {
+  height: 60px;
+  padding: 10px;
+}
+
+.card,
+.cardLong {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 0.375rem;
-  background-color: #fff;
+  background-color: #fefefe;
   height: 60px;
   padding: 10px;
   display: flex;
   align-items: center;
   flex-direction: column;
   row-gap: 10px;
+}
+
+.cardLong {
+  letter-spacing: -1px;
 }
 
 .cardIcon {
@@ -148,7 +164,7 @@
 .cardBody {
   font-size: 1.2rem;
   font-family: "Yeseva One", serif;
-  color: #307E9A;
+  color: #236846;
 }
 
 @media only screen and (min-width: 768px) {
