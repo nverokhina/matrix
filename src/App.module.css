@@ -126,13 +126,11 @@
   grid-template-columns: 80px 80px 80px 80px;
   justify-content: center;
   padding: 1rem 0;
-  gap: 10px;
 }
 
 .gridColumn {
   display: flex;
   flex-direction: column;
-  row-gap: 10px;
 }
 
 .gridColumn>div {
@@ -142,8 +140,6 @@
 
 .card,
 .cardLong {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-  border-radius: 0.375rem;
   background-color: #fefefe;
   height: 60px;
   padding: 10px;
@@ -151,6 +147,8 @@
   align-items: center;
   flex-direction: column;
   row-gap: 10px;
+  outline: 1px solid #eee;
+  box-shadow: 0 0 1px rgba(40, 41, 61, .08), 0 .5px 2px rgba(96, 97, 112, .16);
 }
 
 .cardLong {
@@ -170,6 +168,10 @@
 @media only screen and (min-width: 768px) {
   .infoCard {
     width: 75%;
+  }
+
+  .info p {
+    text-align: center;
   }
 
   .matrixWrapper {
