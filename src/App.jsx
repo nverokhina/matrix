@@ -1,22 +1,16 @@
 import { useState } from 'react';
-import DatePicker, { registerLocale } from 'react-datepicker';
-import { format, isValid } from 'date-fns';
-import { ru } from 'date-fns/locale';
+import InputMask from 'react-input-mask';
 import { calculate } from './utilities';
 import styles from './App.module.css';
 import matrixConfig from './utilities/matrix-config';
-import 'react-datepicker/dist/react-datepicker.css';
-
-registerLocale('ru ', ru);
 
 function App() {
   const [startDate, setStartDate] = useState();
-  const [error, setError] = useState();
   const [result, setResult] = useState({});
 
   const calc = () => {
-    if (!startDate || error) return;
-    const res = calculate(format(startDate || new Date(), 'dd.MM.yyyy'));
+    if (!startDate || !startDate.match(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/g)) return;
+    const res = calculate(startDate);
     setResult(res);
   };
 
@@ -28,32 +22,28 @@ function App() {
       </div>
       <div className={styles.infoSection}>
         <div className={styles.infoCard}>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          calc();
+        }}>
           <h2>
            Введите дату рождения
           </h2>
           <div className={styles.dateInput}>
             <label htmlFor="date">Дата рождения</label>
-            <DatePicker
-              selected={startDate}
-              maxDate={new Date()}
-              minDate={new Date('01.01.1900')}
-              onChange={(date) => {
-                if (isValid(date)) {
-                  setStartDate(date);
-                  setError(false);
-                } else {
-                  setError(true);
-                }
-              }}
-              locale={ru}
-              dateFormat="dd.MM.yyyy"
-              placeholderText='ДД.ММ.ГГГГ'
-              className={error ? 'error' : ''}
+            <InputMask
+              mask="99.99.9999"
+              value={startDate}
+                onChange={(e) => {
+                  setStartDate(e?.target?.value);
+                }}
+              placeholder="ДД.ММ.ГГГГ"
             />
           </div>
           <div>
-          <button onClick={calc} disabled={!startDate}>Рассчитать</button>
+            <button onClick={calc} disabled={!startDate} type='submit'>Рассчитать</button>
           </div>
+        </form>
         </div>
       </div>
       <div className={styles.matrixWrapper}>
